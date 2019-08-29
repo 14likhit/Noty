@@ -1,41 +1,40 @@
 package com.likhit.noty.data.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Note {
+public class Note implements Serializable {
 
-    private String note_title;
+    private String noteTitle;
 
-    private String note_content;
+    private String noteContent;
 
-    private Date note_created;
+    private Date noteCreated;
 
-    public Note(String note_title) {
-        this.note_title = note_title;
-        this.note_created = new Date(System.currentTimeMillis());
+    public Note() {
     }
 
-    public String getNote_title() {
-        return note_title;
+    public String getNoteTitle() {
+        return noteTitle;
     }
 
-    public void setNote_title(String note_title) {
-        this.note_title = note_title;
+    public void setNoteTitle(String noteTitle) {
+        this.noteTitle = noteTitle;
     }
 
-    public String getNote_content() {
-        return note_content;
+    public String getNoteContent() {
+        return noteContent;
     }
 
-    public void setNote_content(String note_content) {
-        this.note_content = note_content;
+    public void setNoteContent(String noteContent) {
+        this.noteContent = noteContent;
     }
 
-    public Date getNote_created() {
-        return note_created;
+    public Date getNoteCreated() {
+        return noteCreated;
     }
 
-    public void setNote_created(Date note_created) {
-        this.note_created = note_created;
+    public void setNoteCreated(Date noteCreated) {
+        this.noteCreated = noteCreated;
     }
 }

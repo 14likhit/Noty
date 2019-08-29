@@ -49,8 +49,8 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteLi
     public void onBindViewHolder(@NonNull final NoteListViewHolder holder, int position) {
         final Note note = noteList.get(position);
 
-        holder.binding.noteTitleTextView.setText(note.getNote_title());
-        holder.binding.noteDateTextView.setText(note.getNote_created().toString());
+        holder.binding.noteTitleTextView.setText(note.getNoteTitle());
+        holder.binding.noteDateTextView.setText(note.getNoteCreated().toString());
         holder.binding.noteItemLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
