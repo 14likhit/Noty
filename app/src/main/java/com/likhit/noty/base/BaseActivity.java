@@ -15,6 +15,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.likhit.noty.R;
 import com.likhit.noty.utils.Utils;
 
+/**
+ * Parent Activity Class for every Activity.
+ */
 @SuppressLint("Registered")
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
@@ -61,13 +64,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             actionBar.setTitle(title);
             actionBar.setDisplayHomeAsUpEnabled(homeButtonEnable);
             actionBar.setDisplayShowHomeEnabled(homeButtonEnable);
-
-//            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    onBackPressed();
-//                }
-//            });
         }
     }
 

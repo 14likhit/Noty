@@ -22,6 +22,16 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_note" />
 
+        <ImageView
+            android:id="@+id/note_message_image_view"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:contentDescription="@string/default_content_description"
+            android:src="@drawable/ic_note_message"
+            app:layout_constraintBottom_toTopOf="@id/note_message_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
             android:id="@+id/note_message_text_view"
             android:layout_width="wrap_content"
@@ -29,8 +39,8 @@
             android:layout_gravity="center|center_horizontal"
             android:gravity="center"
             android:text="@string/message_note"
-            android:textSize="20sp"
             android:textColor="@android:color/black"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

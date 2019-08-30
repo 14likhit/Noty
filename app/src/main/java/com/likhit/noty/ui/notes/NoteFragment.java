@@ -84,6 +84,12 @@ public class NoteFragment extends BaseFragment {
         });
     }
 
+    /**
+     * Method to save the note and rename the existing note
+     * @param note -> Note Object
+     * @param title_changed -> If title changed hence rename file
+     * @param previous_title -> previous title.
+     */
     private void saveNote(Note note, boolean title_changed, String previous_title) {
         try {
             if (title_changed) {

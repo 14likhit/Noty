@@ -69,8 +69,10 @@ public class NoteListFragment extends BaseFragment implements OnItemClickListene
 
         if (noteList == null || noteList.size() == 0) {
             binding.noteListRecyclerView.setVisibility(View.GONE);
+            binding.noteMessageImageView.setVisibility(View.VISIBLE);
             binding.noteMessageTextView.setVisibility(View.VISIBLE);
         } else {
+            binding.noteMessageImageView.setVisibility(View.GONE);
             binding.noteMessageTextView.setVisibility(View.GONE);
             adapter.setNoteList(noteList);
             binding.noteListRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseActivity(), RecyclerView.VERTICAL, false));
@@ -86,6 +88,9 @@ public class NoteListFragment extends BaseFragment implements OnItemClickListene
         });
     }
 
+    /**
+     * Method to read all files for the app and convert them to note lists.
+     */
     private void prepareNotes() {
         File directory;
         directory = getBaseActivity().getFilesDir();
@@ -101,6 +106,12 @@ public class NoteListFragment extends BaseFragment implements OnItemClickListene
         }
     }
 
+    /**
+     * Method to convert files to Note object
+     *
+     * @param fileName->filename
+     * @return -> returns note content.
+     */
     private String openNote(String fileName) {
         String content = "";
         try {

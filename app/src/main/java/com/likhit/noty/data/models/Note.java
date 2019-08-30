@@ -3,6 +3,10 @@ package com.likhit.noty.data.models;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Model class for note.
+ */
+
 public class Note implements Serializable {
 
     private String noteTitle;
