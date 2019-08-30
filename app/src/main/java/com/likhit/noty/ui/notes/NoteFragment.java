@@ -14,6 +14,10 @@ import com.likhit.noty.data.models.Note;
 import com.likhit.noty.databinding.FragmentNoteBinding;
 import com.likhit.noty.utils.AppConstants;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 public class NoteFragment extends BaseFragment {
     public static final String TAG = "NoteFragment";
 
@@ -65,7 +69,21 @@ public class NoteFragment extends BaseFragment {
             public void onClick(View v) {
                 note.setNoteTitle(binding.noteTitleTextView.getText().toString());
                 note.setNoteContent(binding.noteContentTextView.getText().toString());
+                saveNote(note);
             }
         });
     }
+
+    private void saveNote(Note note) {
+        try {
+            OutputStreamWriter out = new OutputStreamWriter(getBaseActivity().openFileOutput(note.getNoteTitle() + ".txt", 0));
+            out.write(note.getNoteContent());
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

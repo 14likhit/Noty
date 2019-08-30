@@ -19,6 +19,12 @@ import com.likhit.noty.custom.OnItemClickListener;
 import com.likhit.noty.data.models.Note;
 import com.likhit.noty.databinding.FragmentNoteListBinding;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +75,43 @@ public class NoteListFragment extends BaseFragment implements OnItemClickListene
             binding.addNoteButton.setVisibility(View.GONE);
             binding.noteListRecyclerView.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void prepareNotes() {
+        File directory;
+        directory = getBaseActivity().getFilesDir();
+        File[] files = directory.listFiles();
+        String theFile;
+        for (int f = 1; f <= files.length; f++) {
+            theFile = files[f].getName();
+            Note note = new Note();
+            note.setNoteTitle(theFile);
+            note.setNoteContent(openNote(theFile));
+            noteList.add(note);
+        }
+    }
+
+    private String openNote(String fileName) {
+        String content = "";
+        try {
+            InputStream in = getBaseActivity().openFileInput(fileName);
+            if (in != null) {
+                InputStreamReader tmp = new InputStreamReader(in);
+                BufferedReader reader = new BufferedReader(tmp);
+                String str;
+                StringBuilder buf = new StringBuilder();
+                while ((str = reader.readLine()) != null) {
+                    buf.append(str).append("\n");
+                }
+                in.close();
+                content = buf.toString();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return content;
     }
 
     @Override
