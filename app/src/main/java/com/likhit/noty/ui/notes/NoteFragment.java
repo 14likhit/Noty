@@ -16,6 +16,7 @@ import com.likhit.noty.databinding.FragmentNoteBinding;
 import com.likhit.noty.utils.ActivityLauncher;
 import com.likhit.noty.utils.AppConstants;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -69,16 +70,30 @@ public class NoteFragment extends BaseFragment {
         binding.saveNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean title_changed = false;
+                String previous_title = null;
+                if (noteMode == AppConstants.NOTE_MODE_EDIT && !note.getNoteTitle().equals(binding.noteTitleTextView.toString())) {
+                    title_changed = true;
+                    previous_title = note.getNoteTitle();
+                }
                 note.setNoteTitle(binding.noteTitleTextView.getText().toString());
                 note.setNoteContent(binding.noteContentTextView.getText().toString());
-                saveNote(note);
+                saveNote(note, title_changed, previous_title);
                 ActivityLauncher.launchHomeActivity(getBaseActivity());
             }
         });
     }
 
-    private void saveNote(Note note) {
+    private void saveNote(Note note, boolean title_changed, String previous_title) {
         try {
+            if (title_changed) {
+                File directory = getBaseActivity().getFilesDir();
+                File from = new File(directory, previous_title);
+                File to = new File(directory, note.getNoteTitle());
+                if (from.exists()) {
+                    from.renameTo(to);
+                }
+            }
             OutputStreamWriter out = new OutputStreamWriter(getBaseActivity().openFileOutput(note.getNoteTitle(), 0));
             out.write(note.getNoteContent());
             out.close();

@@ -13,6 +13,8 @@ import com.likhit.noty.custom.OnItemClickListener;
 import com.likhit.noty.data.models.Note;
 import com.likhit.noty.databinding.ItemNoteBinding;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteListViewHolder> {
@@ -50,7 +52,9 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteLi
         final Note note = noteList.get(position);
 
         holder.binding.noteTitleTextView.setText(note.getNoteTitle());
-        holder.binding.noteDateTextView.setText(note.getNoteCreated().toString());
+        Date date = note.getNoteCreated();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        holder.binding.noteDateTextView.setText(formatter.format(date));
         holder.binding.noteItemLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,10 +71,10 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteLi
         return 0;
     }
 
-    public class NoteListViewHolder extends RecyclerView.ViewHolder {
+    class NoteListViewHolder extends RecyclerView.ViewHolder {
         private ItemNoteBinding binding;
 
-        public NoteListViewHolder(@NonNull View itemView) {
+        NoteListViewHolder(@NonNull View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
         }
