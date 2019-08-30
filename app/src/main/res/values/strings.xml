@@ -3,6 +3,8 @@
     <string name="default_content_description">image_view</string>
     <string name="noteTitle">Note Title</string>
     <string name="sample_date">29/08/2019</string>
-    <string name="message_note">Create your first Note!</string>
+    <string name="message_note">Create your first Note!\n Press + icon to add note.</string>
     <string name="add_note">Add Note</string>
+    <string name="note_save_successful">Note saved!</string>
+    <string name="note_save_unsuccesful">Unable to save note!Please try again</string>
 </resources>

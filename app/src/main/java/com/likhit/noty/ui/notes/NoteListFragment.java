@@ -18,6 +18,7 @@ import com.likhit.noty.base.BaseFragment;
 import com.likhit.noty.custom.OnItemClickListener;
 import com.likhit.noty.data.models.Note;
 import com.likhit.noty.databinding.FragmentNoteListBinding;
+import com.likhit.noty.utils.ActivityLauncher;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class NoteListFragment extends BaseFragment implements OnItemClickListener<Note> {
@@ -63,18 +65,25 @@ public class NoteListFragment extends BaseFragment implements OnItemClickListene
         if (adapter == null) {
             adapter = new NoteListAdapter(this);
         }
-        binding.noteListRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseActivity(), RecyclerView.VERTICAL, false));
-        binding.noteListRecyclerView.setAdapter(adapter);
+        prepareNotes();
 
         if (noteList == null || noteList.size() == 0) {
             binding.noteListRecyclerView.setVisibility(View.GONE);
             binding.noteMessageTextView.setVisibility(View.VISIBLE);
-            binding.addNoteButton.setVisibility(View.VISIBLE);
         } else {
             binding.noteMessageTextView.setVisibility(View.GONE);
-            binding.addNoteButton.setVisibility(View.GONE);
+            adapter.setNoteList(noteList);
+            binding.noteListRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseActivity(), RecyclerView.VERTICAL, false));
+            binding.noteListRecyclerView.setAdapter(adapter);
             binding.noteListRecyclerView.setVisibility(View.VISIBLE);
         }
+
+        binding.addNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityLauncher.launchNoteActivity(getBaseActivity(), null);
+            }
+        });
     }
 
     private void prepareNotes() {
@@ -83,9 +92,10 @@ public class NoteListFragment extends BaseFragment implements OnItemClickListene
         File[] files = directory.listFiles();
         String theFile;
         for (int f = 1; f <= files.length; f++) {
-            theFile = files[f].getName();
+            theFile = files[f - 1].getName();
             Note note = new Note();
             note.setNoteTitle(theFile);
+            note.setNoteCreated(new Date(files[f - 1].lastModified()));
             note.setNoteContent(openNote(theFile));
             noteList.add(note);
         }
@@ -116,6 +126,6 @@ public class NoteListFragment extends BaseFragment implements OnItemClickListene
 
     @Override
     public void onItemClick(Note item, int position, View view) {
-
+        ActivityLauncher.launchNoteActivity(getBaseActivity(), item);
     }
 }

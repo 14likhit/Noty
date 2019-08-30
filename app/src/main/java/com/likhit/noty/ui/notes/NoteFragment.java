@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.likhit.noty.R;
 import com.likhit.noty.base.BaseFragment;
 import com.likhit.noty.data.models.Note;
 import com.likhit.noty.databinding.FragmentNoteBinding;
+import com.likhit.noty.utils.ActivityLauncher;
 import com.likhit.noty.utils.AppConstants;
 
 import java.io.FileNotFoundException;
@@ -70,19 +72,23 @@ public class NoteFragment extends BaseFragment {
                 note.setNoteTitle(binding.noteTitleTextView.getText().toString());
                 note.setNoteContent(binding.noteContentTextView.getText().toString());
                 saveNote(note);
+                ActivityLauncher.launchHomeActivity(getBaseActivity());
             }
         });
     }
 
     private void saveNote(Note note) {
         try {
-            OutputStreamWriter out = new OutputStreamWriter(getBaseActivity().openFileOutput(note.getNoteTitle() + ".txt", 0));
+            OutputStreamWriter out = new OutputStreamWriter(getBaseActivity().openFileOutput(note.getNoteTitle(), 0));
             out.write(note.getNoteContent());
             out.close();
+            showMessage(R.string.note_save_successful);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            showMessage(R.string.note_save_unsuccesful);
         } catch (IOException e) {
             e.printStackTrace();
+            showMessage(R.string.note_save_unsuccesful);
         }
     }
 
